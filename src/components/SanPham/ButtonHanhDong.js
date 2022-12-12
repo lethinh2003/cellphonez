@@ -1,6 +1,41 @@
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { Box, Typography } from "@mui/material";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { themCartItem, themSoLuongCartItem } from "../../redux/actions/cart";
 const ButtonHanhDong = ({ data }) => {
+  const navigate = useNavigate();
+  const [isExistCart, setIsExistCart] = useState(false);
+  const listCartItem = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const checkCartExist = () => {
+    const check = listCartItem.find((item) => item._id == data._id);
+    return check;
+  };
+  const handleClickAddCart = () => {
+    if (checkCartExist()) {
+      toast.info("Số lượng + 1");
+      dispatch(
+        themSoLuongCartItem({
+          itemID: data._id,
+          soLuong: 1,
+        })
+      );
+      return;
+    }
+    dispatch(themCartItem(data));
+    toast.info("Thêm thành công vào giỏ hàng");
+  };
+  const handleClickMuaNgay = () => {
+    if (checkCartExist()) {
+      navigate("/cart");
+      return;
+    }
+    dispatch(themCartItem(data));
+    navigate("/cart");
+  };
   return (
     <>
       <Box
@@ -19,6 +54,7 @@ const ButtonHanhDong = ({ data }) => {
           }}
         >
           <Box
+            onClick={() => handleClickMuaNgay()}
             sx={{
               cursor: "pointer",
               backgroundColor: "#f02a2d",
@@ -50,6 +86,7 @@ const ButtonHanhDong = ({ data }) => {
             </Typography>
           </Box>
           <Box
+            onClick={() => handleClickAddCart()}
             sx={{
               cursor: "pointer",
               width: "60px",

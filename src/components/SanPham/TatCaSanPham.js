@@ -95,7 +95,7 @@ const TatCaSanPham = () => {
   }, [data]);
   useEffect(() => {
     if (tenDanhMuc) {
-      document.title = tenDanhMuc + "| CellPhoneZ";
+      document.title = tenDanhMuc + " | CellPhoneZ";
     }
   }, [tenDanhMuc]);
 
@@ -223,8 +223,9 @@ const TatCaSanPham = () => {
             Array.from({ length: 10 }).map((item, i) => (
               <ItemLoading key={i} />
             ))}
-          {isSuccess &&
-            listSanPham.map((item, i) => <Item key={i} data={item} />)}
+          {listSanPham.map((item, i) => (
+            <Item key={i} data={item} />
+          ))}
         </Box>
         {loadingMore && loadingMore.isHasLoadMore && (
           <Box

@@ -51,7 +51,7 @@ const BannerChinh = () => {
     <>
       <Container
         sx={{
-          maxWidth: { xs: "100%", md: "calc(100% - 165px - 20px)", lg: "60%" },
+          maxWidth: { xs: "100%", md: "calc(100% - 165px - 20px)", lg: "55%" },
         }}
       >
         <Box

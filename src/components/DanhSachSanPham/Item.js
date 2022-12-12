@@ -1,10 +1,40 @@
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { Box, Rating, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { memo, useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-
+import {
+  themDanhSachYeuThich,
+  xoaDanhSachYeuThich,
+} from "../../redux/actions/danhSachYeuThich";
 const Item = ({ data, isSale = false }) => {
+  const dispatch = useDispatch();
+  const listDanhSachYeuThich = useSelector((state) => state.danhSachYeuThich);
+  const [isHeart, setIsHeart] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const checkIsHearted = () => {
+    return listDanhSachYeuThich.find((item) => data._id == item);
+  };
+  useEffect(() => {
+    if (checkIsHearted()) {
+      setIsHeart(true);
+    } else {
+      setIsHeart(false);
+    }
+  }, [data]);
+  const handleClickHeart = () => {
+    if (isHeart) {
+      dispatch(xoaDanhSachYeuThich(data._id));
+      setIsHeart(false);
+    } else {
+      dispatch(themDanhSachYeuThich(data._id));
+      setIsHeart(true);
+    }
+  };
+
   const Container = styled(Box)({
     backgroundColor: "#ffffff",
     position: "relative",
@@ -47,6 +77,7 @@ const Item = ({ data, isSale = false }) => {
     },
 
     "& .title": {
+      textAlign: "left",
       height: "65px",
       fontWeight: "bold",
       fontSize: "14px",
@@ -63,10 +94,8 @@ const Item = ({ data, isSale = false }) => {
     },
 
     "& .price": {
-      display: "flex",
-      alignItems: "flex-end",
-      flexWrap: "wrap",
-      gap: "5px",
+      minHeight: "50px",
+      maxHeight: "50px",
 
       "&__discount": {
         color: "#D70018",
@@ -122,22 +151,49 @@ const Item = ({ data, isSale = false }) => {
     <>
       {data && (
         <Container>
-          <Link to={`/sanpham/${data.slug}`}>
-            {data.giamGia > 0 && (
-              <Box className="discount-banner">
-                <Typography className="discount-banner__text">
-                  Giảm {data.giamGia}%
-                </Typography>
-              </Box>
-            )}
-            <Box className="image_product" sx={{}}>
+          {data.giamGia > 0 && (
+            <Box className="discount-banner">
+              <Typography className="discount-banner__text">
+                Giảm {data.giamGia}%
+              </Typography>
+            </Box>
+          )}
+
+          <Box className="image_product" sx={{}}>
+            <Link
+              to={`/sanpham/${data.slug}`}
+              style={{ width: "100%", height: "100%" }}
+            >
               <img
                 src={data.linkAnh.length > 0 ? data.linkAnh[0] : null}
                 loading="lazy"
-              />{" "}
-            </Box>
-            <Typography className="title">{data.tenSanPham}</Typography>
-            <Box className="price">
+              />
+            </Link>
+          </Box>
+
+          <Typography className="title">
+            {" "}
+            <Link
+              to={`/sanpham/${data.slug}`}
+              style={{
+                color: "#444444",
+              }}
+            >
+              {data.tenSanPham}{" "}
+            </Link>
+          </Typography>
+
+          <Box className="price">
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                flexWrap: "wrap",
+                gap: "5px",
+                alignItems: "flex-end",
+              }}
+            >
               <Typography className="price__discount">
                 {" "}
                 <NumericFormat
@@ -163,34 +219,35 @@ const Item = ({ data, isSale = false }) => {
                 </Typography>
               )}
             </Box>
-            {!isSale && (
-              <Box
-                className="promotion"
-                sx={{
-                  visibility:
-                    data.thongTinKhuyenMai.length > 0 ? "visible" : "hidden",
-                }}
-              >
-                <Typography className="promotion__text">
-                  {data.thongTinKhuyenMai.join("; ")}
-                </Typography>
-              </Box>
-            )}
-            <Box className="rating">
-              <Rating name="half-rating" defaultValue={5} precision={0.5} />
+          </Box>
+          {!isSale && (
+            <Box
+              className="promotion"
+              sx={{
+                visibility:
+                  data.thongTinKhuyenMai.length > 0 ? "visible" : "hidden",
+              }}
+            >
+              <Typography className="promotion__text">
+                {data.thongTinKhuyenMai.join("; ")}
+              </Typography>
             </Box>
-            <Box className="button">
-              <Box className="button__item">
-                <Typography className="button__item-text">Yêu thích</Typography>
-                <Box className="button__item-icon">
-                  <FavoriteBorderOutlinedIcon />
-                </Box>
+          )}
+          <Box className="rating">
+            <Rating name="half-rating" defaultValue={5} precision={0.5} />
+          </Box>
+          <Box className="button">
+            <Box className="button__item" onClick={() => handleClickHeart()}>
+              <Typography className="button__item-text">Yêu thích</Typography>
+              <Box className="button__item-icon">
+                {!isHeart && <FavoriteBorderOutlinedIcon />}
+                {isHeart && <FavoriteIcon />}
               </Box>
             </Box>
-          </Link>
+          </Box>
         </Container>
       )}
     </>
   );
 };
-export default Item;
+export default memo(Item);

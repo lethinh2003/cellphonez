@@ -71,7 +71,14 @@ const LocSanPham = ({ filterValue, setFilterValue }) => {
               className={filterValue === item.data ? "active" : null}
               key={i}
             >
-              {item.icon} {item.title}
+              {item.icon}
+              <Typography
+                sx={{
+                  fontSize: "12px",
+                }}
+              >
+                {item.title}
+              </Typography>
             </ButtonLoc>
           ))}
         </Box>

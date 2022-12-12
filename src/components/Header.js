@@ -5,10 +5,23 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { setCartItem } from "../redux/actions/cart";
 import GioHang from "./Header/GioHang";
 import SearchForm from "./Header/SearchForm";
+
+import { setIsOpenDanhMuc } from "../redux/actions/openDanhMuc";
 const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const listYeuThich =
+      JSON.parse(localStorage.getItem("danhSachYeuThich")) || [];
+    const listCart = JSON.parse(localStorage.getItem("cart")) || [];
+    dispatch(setCartItem(listCart));
+  }, []);
   const MenuButton = styled(Box)({
     cursor: "pointer",
     height: "100%",
@@ -135,6 +148,7 @@ const Header = () => {
             </Link>
           </Box>
           <MenuButton
+            onClick={() => dispatch(setIsOpenDanhMuc(true))}
             sx={{
               display: { xs: "none", md: "flex" },
               maxWidth: "100px",
@@ -217,6 +231,7 @@ const Header = () => {
             <Typography className="text">Cửa hàng gần bạn</Typography>
           </MenuButtonSecond>
           <MenuButtonSecond
+            onClick={() => navigate("/tra-cuu-don-hang")}
             sx={{
               display: { xs: "none", md: "flex" },
               width: "100%",

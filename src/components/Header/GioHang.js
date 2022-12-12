@@ -1,8 +1,12 @@
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const GioHang = () => {
+  const listCart = useSelector((state) => state.cart);
+
+  const navigate = useNavigate();
   const MenuButton = styled(Box)({
     cursor: "pointer",
     height: "100%",
@@ -59,6 +63,7 @@ const GioHang = () => {
   return (
     <>
       <MenuButtonSecond
+        onClick={() => navigate("/cart")}
         sx={{
           maxWidth: "80px",
           width: "100%",
@@ -69,8 +74,28 @@ const GioHang = () => {
           gap: { xs: 0, md: "5px" },
         }}
       >
-        <Box className="icon">
-          <ShoppingBagOutlinedIcon />
+        <Box
+          className="icon"
+          sx={{
+            position: "relative",
+          }}
+        >
+          <ShoppingBagOutlinedIcon
+            sx={{
+              width: "35px",
+              height: "35px",
+            }}
+          />
+          <Typography
+            sx={{
+              position: "absolute",
+              top: "55%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            {listCart.length}
+          </Typography>
         </Box>
         <Typography
           className="text"

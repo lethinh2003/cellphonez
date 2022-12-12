@@ -6,6 +6,7 @@ import BannerChinh from "./HomePage/BannerChinh";
 import BannerPhu from "./HomePage/BannerPhu";
 import DanhMuc from "./HomePage/DanhMuc";
 import DanhSachSanPham from "./HomePage/DanhSachSanPham";
+import ThongTinBanner from "./HomePage/ThongTinBanner";
 import HotSale from "./Sale/HotSale";
 const Home = () => {
   const listDanhMuc = useSelector((state) => state.danhMuc);
@@ -50,6 +51,8 @@ const Home = () => {
             danhMucID={item._id}
           />
         ))}
+        <ThongTinBanner title={"Ưu đãi thanh toán"} />
+        <ThongTinBanner title={"Chuyên trang thương hiệu"} />
       </Box>
     </>
   );

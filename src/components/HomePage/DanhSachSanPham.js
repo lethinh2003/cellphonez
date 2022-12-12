@@ -122,7 +122,7 @@ const DanhSachSanPham = ({ title, type, danhMucID }) => {
 
         <Box
           sx={{
-            height: { xs: "unset", md: "810px" },
+            height: { xs: "unset", md: "970px" },
           }}
         >
           <Swiper

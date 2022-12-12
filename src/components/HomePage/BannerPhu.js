@@ -10,6 +10,7 @@ const BannerPhu = () => {
     borderRadius: "10px",
     padding: "10px",
     fontSize: "14px",
+    display: "flex",
 
     flexDirection: "column",
     gap: "15px",
@@ -17,13 +18,14 @@ const BannerPhu = () => {
     flex: 1,
   });
   const BannerItem = styled(Box)({
-    width: "258px",
-    height: "115px",
+    width: "100%",
+    borderRadius: "10px",
+    overflow: "hidden",
 
     "& img": {
       width: "100%",
       height: "100%",
-      objectFit: "contain",
+
       borderRadius: "10px",
     },
   });
@@ -58,6 +60,9 @@ const BannerPhu = () => {
             width: "100%",
             height: "100%",
             overflowY: "auto",
+            display: "flex",
+            flexDirection: "column",
+            gap: "10px",
           }}
         >
           {dataQuery &&

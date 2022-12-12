@@ -60,10 +60,8 @@ const ItemLoading = ({}) => {
     },
 
     "& .price": {
-      display: "flex",
-      alignItems: "flex-end",
-      flexWrap: "wrap",
-      gap: "5px",
+      minHeight: "50px",
+      maxHeight: "50px",
 
       "&__discount": {
         color: "#D70018",
@@ -132,10 +130,21 @@ const ItemLoading = ({}) => {
           <Skeleton variant="rectangular" height={30} width={"100%"} />
         </Typography>
         <Box className="price">
-          <Typography className="price__discount">
-            {" "}
-            <Skeleton variant="rectangular" height={20} width={100} />
-          </Typography>
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "5px",
+              alignItems: "flex-end",
+            }}
+          >
+            <Typography className="price__discount">
+              {" "}
+              <Skeleton variant="rectangular" height={50} width={100} />
+            </Typography>
+          </Box>
         </Box>
 
         <Box className="rating">

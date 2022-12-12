@@ -13,8 +13,11 @@ import ThongTinSanPham from "./components/AdminPage/SanPham/ThongTinSanPham";
 import TrangChu from "./components/AdminPage/TrangChu";
 import Home from "./components/Home";
 import Layout from "./components/Layout";
+import Cart from "./components/SanPham/Cart";
 import SanPhamDetail from "./components/SanPham/SanPhamDetail";
 import TatCaSanPham from "./components/SanPham/TatCaSanPham";
+import TraCuuDonHang from "./components/TraCuuDonHang";
+import ScrollToTop from "./customHooks/ScrollToTop";
 import rootReducer from "./redux/reducers";
 const store = createStore(
   rootReducer,
@@ -41,6 +44,7 @@ const App = () => {
         <ThemeProvider theme={theme}>
           <QueryClientProvider client={queryClient}>
             <BrowserRouter>
+              <ScrollToTop />
               <Routes>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />
@@ -53,6 +57,8 @@ const App = () => {
                     path="tat-ca-san-pham/:danhMuc"
                     element={<TatCaSanPham />}
                   />
+                  <Route path="tra-cuu-don-hang" element={<TraCuuDonHang />} />
+                  <Route path="cart" element={<Cart />} />
                 </Route>
                 <Route path="/admin" element={<AdminLayout />}>
                   <Route index element={<TrangChu />} />
