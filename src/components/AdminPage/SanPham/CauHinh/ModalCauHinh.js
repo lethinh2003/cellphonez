@@ -26,11 +26,10 @@ const ModalCauHinh = ({ item }) => {
       setIsLoading(true);
       let res;
 
-      if (item.danhMuc._id == "6391954bba537b41c47f8cf0") {
-        res = await axios.get(
-          `${process.env.REACT_APP_ENDPOINT_SERVER}/api/v1/cauhinh/check/${item._id}`
-        );
-      }
+      res = await axios.get(
+        `${process.env.REACT_APP_ENDPOINT_SERVER}/api/v1/cauhinh/check/${item._id}`
+      );
+
       setIsLoading(false);
       setIsHaveCauHinh(true);
       setThongTin(res.data.data);

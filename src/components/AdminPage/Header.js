@@ -8,9 +8,11 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import axios from "axios";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { setDanhMuc } from "../../redux/actions/danhMuc";
 const Header = ({ handleClickSidebarMobile }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const danhMuc = useSelector((state) => state.danhMuc);
   const theme = useTheme();
@@ -45,11 +47,7 @@ const Header = ({ handleClickSidebarMobile }) => {
   };
   useEffect(() => {
     fetchDanhMuc();
-    console.log("Danh muc", danhMuc);
   }, []);
-  useEffect(() => {
-    console.log("Danh muc sau dispatch", danhMuc);
-  }, [danhMuc]);
 
   return (
     <>
@@ -98,7 +96,7 @@ const Header = ({ handleClickSidebarMobile }) => {
             <HeaderItem>
               <NotificationsIcon />
             </HeaderItem>
-            <HeaderItem>
+            <HeaderItem onClick={() => navigate("/")}>
               <ExitToAppIcon />
             </HeaderItem>
           </Box>

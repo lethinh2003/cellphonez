@@ -20,6 +20,7 @@ const Cart = () => {
   const listCart = useSelector((state) => state.cart);
 
   useEffect(() => {
+    document.title = "Giỏ hàng";
     timerLoadingRef.current = setTimeout(() => {
       setIsLoading(false);
     }, 500);

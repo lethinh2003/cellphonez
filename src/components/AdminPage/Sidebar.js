@@ -3,8 +3,9 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import { Box, Typography } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 const Sidebar = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("md"));
 
@@ -84,7 +85,9 @@ const Sidebar = () => {
                 fontWeight: "bold",
               }}
             >
-              <Box className="logo">cellphone Z</Box>
+              <Box className="logo" onClick={() => navigate("/admin")}>
+                cellphone Z
+              </Box>
             </Box>
             {item.map((item, i) => (
               <Link to={item.href} key={i}>

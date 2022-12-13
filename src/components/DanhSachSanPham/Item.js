@@ -5,6 +5,7 @@ import { styled } from "@mui/material/styles";
 import { memo, useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { useDispatch, useSelector } from "react-redux";
+
 import { Link } from "react-router-dom";
 import {
   themDanhSachYeuThich,
@@ -166,7 +167,8 @@ const Item = ({ data, isSale = false }) => {
             >
               <img
                 src={data.linkAnh.length > 0 ? data.linkAnh[0] : null}
-                loading="lazy"
+                alt={data.tenSanPham}
+                loading={"lazy"}
               />
             </Link>
           </Box>

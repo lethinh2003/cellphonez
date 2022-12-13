@@ -10,6 +10,7 @@ const ModalCauHinhChiTiet = ({ data, isOpenModal, handleClickCloseModal }) => {
       >
         <Box
           sx={{
+            maxHeight: "calc(100% - 120px)",
             position: "absolute",
             top: "50%",
             left: "50%",

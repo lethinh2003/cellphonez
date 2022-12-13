@@ -128,6 +128,7 @@ const Header = () => {
             className="logo"
             sx={{
               minWidth: "35px",
+              maxWidth: "35px",
               height: "35px",
               borderRadius: "10px",
               border: "1px solid #ffffff",

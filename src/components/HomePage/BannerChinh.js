@@ -81,7 +81,7 @@ const BannerChinh = () => {
                 return (
                   <SwiperSlide key={i} className="banner-chinh">
                     <BannerItem>
-                      <Box component={"img"} src={item}></Box>
+                      <Box component={"img"} src={item} />
                     </BannerItem>
                   </SwiperSlide>
                 );

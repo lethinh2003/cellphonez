@@ -5,7 +5,7 @@ import Sidebar from "./AdminPage/Sidebar";
 
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SidebarMobile from "./AdminPage/SidebarMobile";
 const Admin = () => {
   const theme = useTheme();
@@ -14,6 +14,10 @@ const Admin = () => {
   const handleClickSidebarMobile = () => {
     setIsSidebarMobile(!isSidebarMobile);
   };
+
+  useEffect(() => {
+    document.title = "Admin Panel";
+  }, []);
   return (
     <>
       <Box

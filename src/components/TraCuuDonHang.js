@@ -10,7 +10,7 @@ import {
 import { Link } from "react-router-dom";
 
 import axios from "axios";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 const TraCuuDonHang = () => {
@@ -19,6 +19,10 @@ const TraCuuDonHang = () => {
   const [soDienThoai, setSoDienThoai] = useState("");
   const [maDonHang, setMaDonHang] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    document.title = "Tra cứu đơn hàng";
+  }, []);
 
   const handleClickTraCuu = async () => {
     try {
