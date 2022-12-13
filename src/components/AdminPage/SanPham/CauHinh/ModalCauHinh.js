@@ -47,6 +47,11 @@ const ModalCauHinh = ({ item }) => {
       if (!item) {
         return;
       }
+      const checkRightAdmin = localStorage.getItem("admin");
+      if (!checkRightAdmin) {
+        toast.error("Bạn không có quyền này");
+        return;
+      }
       setIsLoading(true);
       let res;
 

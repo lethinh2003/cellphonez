@@ -36,6 +36,11 @@ const ItemTaoMoi = () => {
 
   const handleClickSubmit = async () => {
     try {
+      const checkRightAdmin = localStorage.getItem("admin");
+      if (!checkRightAdmin) {
+        toast.error("Bạn không có quyền này");
+        return;
+      }
       setIsLoading(true);
       const linkAnh = linkAnhText.split("; ");
       const uuDaiThem = uuDaiThemText.split("; ");

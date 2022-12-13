@@ -23,7 +23,7 @@ const SearchForm = () => {
       timerSearchRef.current = setTimeout(() => {
         setIsLoading(false);
         navigate(`/search?query=${searchValue}`);
-      }, 500);
+      }, 300);
       return () => {
         setIsLoading(false);
         clearTimeout(timerSearchRef.current);

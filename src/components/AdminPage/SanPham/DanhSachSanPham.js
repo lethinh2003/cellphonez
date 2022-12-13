@@ -121,7 +121,11 @@ const DanhSachSanPham = () => {
       headerName: "Link",
       width: 200,
       renderCell: (params) => (
-        <a href={params.value} target="_blank" rel="noopener noreferrer">
+        <a
+          href={`/sanpham/${params.value}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <Button
             variant="contained"
             color="primary"
