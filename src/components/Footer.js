@@ -106,6 +106,7 @@ const Footer = () => {
           boxShadow:
             "0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%)",
           padding: "10px",
+          marginTop: "20px",
         }}
       >
         <Box

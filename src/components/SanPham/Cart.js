@@ -1,10 +1,12 @@
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import { Box, CircularProgress, Typography } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+
+import { Box, Breadcrumbs, CircularProgress, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useEffect, useRef, useState } from "react";
 import { NumericFormat } from "react-number-format";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CartDatHang from "./CartDatHang";
 import CartItem from "./CartItem";
 const Cart = () => {
@@ -20,7 +22,7 @@ const Cart = () => {
   useEffect(() => {
     timerLoadingRef.current = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 500);
     return () => {
       clearTimeout(timerLoadingRef.current);
     };
@@ -39,7 +41,6 @@ const Cart = () => {
     maxWidth: "600px",
     width: "100%",
     borderRadius: "10px",
-    marginTop: "100px",
     fontSize: "14px",
     gap: "10px",
     display: "flex",
@@ -57,96 +58,241 @@ const Cart = () => {
 
   return (
     <>
-      <Container>
-        <Box
+      <Box
+        sx={{
+          marginTop: "74px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "15px",
+        }}
+      >
+        <Breadcrumbs
+          separator="›"
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
-            alignItems: "center",
-            width: "100%",
+            fontSize: "12px",
           }}
         >
-          {isLoading && (
-            <CircularProgress
-              sx={{
-                color: "#d70018",
-              }}
-            />
-          )}
-
-          {!isLoading && (
+          <Link to="/">
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
-                color: "#d70018",
-                fontWeight: "bold",
-                width: "100%",
-                justifyContent: "space-between",
+                gap: "5px",
               }}
             >
-              <Box
-                onClick={
-                  !isDatHang ? () => navigate(-1) : () => setIsDatHang(false)
-                }
+              <HomeIcon
                 sx={{
-                  display: "flex",
-                  cursor: "pointer",
+                  color: "#d70018",
+                  width: "15px",
+                  height: "15px",
+                }}
+              />
+
+              <Typography
+                sx={{
+                  color: "#707070",
+                  fontSize: "12px",
                 }}
               >
-                <ArrowBackIosIcon />
+                Trang chủ
+              </Typography>
+            </Box>
+          </Link>
+          <Typography
+            sx={{
+              color: "#707070",
+              fontSize: "12px",
+            }}
+          >
+            Giỏ hàng
+          </Typography>
+        </Breadcrumbs>
+        <Container>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              alignItems: "center",
+              width: "100%",
+            }}
+          >
+            {isLoading && (
+              <CircularProgress
+                sx={{
+                  color: "#d70018",
+                }}
+              />
+            )}
+
+            {!isLoading && (
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  color: "#d70018",
+                  fontWeight: "bold",
+                  width: "100%",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box
+                  onClick={
+                    !isDatHang ? () => navigate(-1) : () => setIsDatHang(false)
+                  }
+                  sx={{
+                    display: "flex",
+                    cursor: "pointer",
+                  }}
+                >
+                  <ArrowBackIosIcon />
+                  <Typography
+                    sx={{
+                      color: "#d70018",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Trở về
+                  </Typography>
+                </Box>
                 <Typography
                   sx={{
                     color: "#d70018",
                     fontWeight: "bold",
                   }}
                 >
-                  Trở về
+                  {!isDatHang ? "Giỏ hàng" : "Đặt hàng"}
                 </Typography>
               </Box>
-              <Typography
-                sx={{
-                  color: "#d70018",
-                  fontWeight: "bold",
-                }}
-              >
-                {!isDatHang ? "Giỏ hàng" : "Đặt hàng"}
-              </Typography>
-            </Box>
-          )}
+            )}
 
-          {!isLoading && isDatHang && (
-            <CartDatHang
-              tongTien={tongTien}
-              listCart={listCart}
-              setIsDatHang={setIsDatHang}
-            />
-          )}
-          {!isLoading && listCart.length == 0 && (
-            <>
+            {!isLoading && isDatHang && (
+              <CartDatHang
+                tongTien={tongTien}
+                listCart={listCart}
+                setIsDatHang={setIsDatHang}
+              />
+            )}
+            {!isLoading && listCart.length == 0 && (
+              <>
+                <Box
+                  sx={{
+                    width: "50px",
+                    height: "50px",
+                  }}
+                >
+                  <img
+                    src="https://i.imgur.com/NE1RYMn.png"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                    }}
+                  />
+                </Box>
+                <Typography
+                  sx={{
+                    fontSize: "22px",
+                    color: "#444",
+                  }}
+                >
+                  Không có sản phẩm nào trong giỏ hàng, vui lòng quay lại
+                </Typography>
+                <Box
+                  onClick={() => navigate("/")}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textTransform: "uppercase",
+                    background: "#d70018",
+                    borderRadius: "10px",
+                    padding: "10px",
+                    color: "#ffffff",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                  }}
+                >
+                  Quay lại trang chủ
+                </Box>
+              </>
+            )}
+            {!isLoading &&
+              !isDatHang &&
+              listCart.map((item, i) => (
+                <CartItem
+                  setIsCapNhat={setIsCapNhat}
+                  isCapNhat={isCapNhat}
+                  key={item._id}
+                  data={item}
+                />
+              ))}
+          </Box>
+          {!isLoading && listCart.length > 0 && (
+            <Box
+              sx={{
+                width: "100%",
+                padding: "10px",
+                gap: "10px",
+                display: "flex",
+                flexDirection: "column",
+                borderRadius: "15px",
+                boxShadow:
+                  "0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%)",
+              }}
+            >
               <Box
                 sx={{
-                  width: "50px",
-                  height: "50px",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
               >
-                <img
-                  src="https://i.imgur.com/NE1RYMn.png"
-                  style={{
-                    width: "100%",
-                    height: "100%",
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    color: "#0e2431",
+                    fontWeight: "bold",
                   }}
-                />
+                >
+                  Tổng tiền tạm tính:
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "16px",
+                    color: "#d70018",
+                    fontWeight: "bold",
+                  }}
+                >
+                  <NumericFormat
+                    value={tongTien}
+                    displayType={"text"}
+                    thousandSeparator={"."}
+                    decimalSeparator={","}
+                    suffix={" ₫"}
+                  />
+                </Typography>
               </Box>
-              <Typography
-                sx={{
-                  fontSize: "22px",
-                  color: "#444",
-                }}
-              >
-                Không có sản phẩm nào trong giỏ hàng, vui lòng quay lại
-              </Typography>
+              {!isDatHang && (
+                <Box
+                  onClick={() => handleClickDatHang()}
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    textTransform: "uppercase",
+                    background: "#d70018",
+                    borderRadius: "10px",
+                    padding: "10px",
+                    color: "#ffffff",
+                    fontSize: "16px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                  }}
+                >
+                  Tiến hành đặt hàng
+                </Box>
+              )}
               <Box
                 onClick={() => navigate("/")}
                 sx={{
@@ -154,123 +300,28 @@ const Cart = () => {
                   justifyContent: "center",
                   alignItems: "center",
                   textTransform: "uppercase",
-                  background: "#d70018",
+                  cursor: "pointer",
+
                   borderRadius: "10px",
                   padding: "10px",
-                  color: "#ffffff",
+                  color: "#dc3545",
+                  borderColor: "#dc3545",
+                  border: "1px solid",
                   fontSize: "16px",
                   fontWeight: "bold",
-                  cursor: "pointer",
+
+                  "&:hover": {
+                    backgroundColor: "#d70018",
+                    color: "#ffffff",
+                  },
                 }}
               >
-                Quay lại trang chủ
+                Chọn thêm sản phẩm khác
               </Box>
-            </>
+            </Box>
           )}
-          {!isLoading &&
-            !isDatHang &&
-            listCart.map((item, i) => (
-              <CartItem
-                setIsCapNhat={setIsCapNhat}
-                isCapNhat={isCapNhat}
-                key={item._id}
-                data={item}
-              />
-            ))}
-        </Box>
-        {!isLoading && listCart.length > 0 && (
-          <Box
-            sx={{
-              width: "100%",
-              padding: "10px",
-              gap: "10px",
-              display: "flex",
-              flexDirection: "column",
-              borderRadius: "15px",
-              boxShadow:
-                "0 1px 2px 0 rgb(60 64 67 / 10%), 0 2px 6px 2px rgb(60 64 67 / 15%)",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontSize: "16px",
-                  color: "#0e2431",
-                  fontWeight: "bold",
-                }}
-              >
-                Tổng tiền tạm tính:
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: "16px",
-                  color: "#d70018",
-                  fontWeight: "bold",
-                }}
-              >
-                <NumericFormat
-                  value={tongTien}
-                  displayType={"text"}
-                  thousandSeparator={"."}
-                  decimalSeparator={","}
-                  suffix={" ₫"}
-                />
-              </Typography>
-            </Box>
-            {!isDatHang && (
-              <Box
-                onClick={() => handleClickDatHang()}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textTransform: "uppercase",
-                  background: "#d70018",
-                  borderRadius: "10px",
-                  padding: "10px",
-                  color: "#ffffff",
-                  fontSize: "16px",
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                }}
-              >
-                Tiến hành đặt hàng
-              </Box>
-            )}
-            <Box
-              onClick={() => navigate("/")}
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                textTransform: "uppercase",
-                cursor: "pointer",
-
-                borderRadius: "10px",
-                padding: "10px",
-                color: "#dc3545",
-                borderColor: "#dc3545",
-                border: "1px solid",
-                fontSize: "16px",
-                fontWeight: "bold",
-
-                "&:hover": {
-                  backgroundColor: "#d70018",
-                  color: "#ffffff",
-                },
-              }}
-            >
-              Chọn thêm sản phẩm khác
-            </Box>
-          </Box>
-        )}
-      </Container>
+        </Container>
+      </Box>
     </>
   );
 };

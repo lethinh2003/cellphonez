@@ -27,10 +27,10 @@ const Home = () => {
     <>
       <Box
         sx={{
-          marginTop: "100px",
+          marginTop: "74px",
           display: "flex",
           flexDirection: "column",
-          gap: "10px",
+          gap: "15px",
         }}
       >
         <HomePageInformation

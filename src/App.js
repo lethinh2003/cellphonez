@@ -15,6 +15,7 @@ import Home from "./components/Home";
 import Layout from "./components/Layout";
 import Cart from "./components/SanPham/Cart";
 import SanPhamDetail from "./components/SanPham/SanPhamDetail";
+import Search from "./components/SanPham/Search";
 import TatCaSanPham from "./components/SanPham/TatCaSanPham";
 import TraCuuDonHang from "./components/TraCuuDonHang";
 import ScrollToTop from "./customHooks/ScrollToTop";
@@ -49,6 +50,7 @@ const App = () => {
                 <Route path="/" element={<Layout />}>
                   <Route index element={<Home />} />
 
+                  <Route path="search" element={<Search />} />
                   <Route
                     path="sanpham/:sanPhamSlug"
                     element={<SanPhamDetail />}

@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { Grid, Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import Item from "../DanhSachSanPham/Item";
+import CountDownWeekend from "./CountDownWeekend";
 const HotSale = () => {
   const [loaiSale, setLoaiSale] = useState("thietbi");
   const Container = styled(Box)({
@@ -144,18 +145,7 @@ const HotSale = () => {
               }}
             />
           </Box>
-          <DemThoiGianContainer>
-            <Typography className="title">Bắt đầu sau:</Typography>
-            <Box className="demnguoc">
-              <Box className="demnguoc__item">00</Box>
-              <Box className="demnguoc__2cham">:</Box>
-              <Box className="demnguoc__item">00</Box>
-              <Box className="demnguoc__2cham">:</Box>
-              <Box className="demnguoc__item">00</Box>
-              <Box className="demnguoc__2cham">:</Box>
-              <Box className="demnguoc__item">00</Box>
-            </Box>
-          </DemThoiGianContainer>
+          <CountDownWeekend />
         </Box>
         <Box>
           {isLoading && (

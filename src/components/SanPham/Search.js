@@ -12,15 +12,17 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useSearchParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import Item from "../DanhSachSanPham/Item";
 import ItemLoading from "../DanhSachSanPham/ItemLoading";
 import LocSanPham from "./LocSanPham";
 
-const TatCaSanPham = () => {
+const Search = () => {
+  const listDanhMuc = useSelector((state) => state.danhMuc);
+  const [searchParams] = useSearchParams();
   const [pageCount, setPageCount] = useState(1);
-
   const [loadingMore, setLoadingMore] = useState({
     isLoading: false,
     isHasLoadMore: false,
@@ -28,20 +30,24 @@ const TatCaSanPham = () => {
   });
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [filterValue, setFilterValue] = useState("-giaTien");
-  const [tenDanhMuc, setTenDanhMuc] = useState("");
+  const [searchQuery, setSearchValue] = useState("");
+  const [loaiDanhMuc, setLoaiDanhMuc] = useState("all");
   const [listSanPham, setListSanPham] = useState([]);
 
-  const { danhMuc } = useParams();
-  const callDataApi = async (danhMuc, filterValue) => {
+  useEffect(() => {
+    setSearchValue(searchParams.get("query"));
+    window.scrollTo(0, 0);
+  }, [searchParams]);
+  const callDataApi = async (searchQuery, loaiDanhMuc, filterValue) => {
     const results = await axios.get(
-      `${process.env.REACT_APP_ENDPOINT_SERVER}/api/v1/sanpham/type/${danhMuc}?results=${itemsPerPage}&sorts=${filterValue}`
+      `${process.env.REACT_APP_ENDPOINT_SERVER}/api/v1/sanpham/search/?query=${searchQuery}&results=${itemsPerPage}&loaiDanhMuc=${loaiDanhMuc}&sorts=${filterValue}`
     );
 
     return results.data;
   };
   const getListQuery = useQuery(
-    ["get-all-sanpham-by-danhmuc-id", danhMuc, filterValue],
-    () => callDataApi(danhMuc, filterValue),
+    ["get-all-sanpham-by-search-ten", searchQuery, loaiDanhMuc, filterValue],
+    () => callDataApi(searchQuery, loaiDanhMuc, filterValue),
     {
       cacheTime: Infinity,
       refetchOnWindowFocus: false,
@@ -56,7 +62,7 @@ const TatCaSanPham = () => {
     }));
     setListSanPham([]);
     setPageCount(1);
-  }, [filterValue]);
+  }, [filterValue, loaiDanhMuc, searchQuery]);
   const {
     data,
     isLoading,
@@ -72,9 +78,6 @@ const TatCaSanPham = () => {
   }, [isErrorQuery]);
   useEffect(() => {
     if (data) {
-      if (data.danhMuc) {
-        setTenDanhMuc(data.danhMuc.tenDanhMuc);
-      }
       if (data.results === itemsPerPage) {
         setLoadingMore((prev) => ({
           ...prev,
@@ -94,10 +97,10 @@ const TatCaSanPham = () => {
     }
   }, [data]);
   useEffect(() => {
-    if (tenDanhMuc) {
-      document.title = tenDanhMuc + " | CellPhoneZ";
+    if (searchQuery) {
+      document.title = `Tìm kiếm sản phẩm ${searchQuery} | CellPhoneZ`;
     }
-  }, [tenDanhMuc]);
+  }, [searchQuery]);
 
   const handleClickLoadMore = async () => {
     try {
@@ -107,7 +110,7 @@ const TatCaSanPham = () => {
         isLoading: true,
       }));
       const results = await axios.get(
-        `${process.env.REACT_APP_ENDPOINT_SERVER}/api/v1/sanpham/type/${danhMuc}?page=${pageCount}&results=${itemsPerPage}&sorts=${filterValue}`
+        `${process.env.REACT_APP_ENDPOINT_SERVER}/api/v1/sanpham/search/?query=${searchQuery}&page=${pageCount}&results=${itemsPerPage}&loaiDanhMuc=${loaiDanhMuc}&sorts=${filterValue}`
       );
       if (results.data.results === itemsPerPage) {
         setLoadingMore((prev) => ({
@@ -124,7 +127,6 @@ const TatCaSanPham = () => {
           isLoading: false,
           isEndLoadMore: true,
         }));
-        console.log("LOADINGMORE", loadingMore);
       }
 
       setListSanPham((prev) => [...prev, ...results.data.data]);
@@ -161,51 +163,74 @@ const TatCaSanPham = () => {
           gap: "15px",
         }}
       >
-        {tenDanhMuc && (
-          <Breadcrumbs
-            separator="›"
+        <Breadcrumbs
+          separator="›"
+          sx={{
+            fontSize: "12px",
+          }}
+        >
+          <Link to="/">
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
+              }}
+            >
+              <HomeIcon
+                sx={{
+                  color: "#d70018",
+                  width: "15px",
+                  height: "15px",
+                }}
+              />
+
+              <Typography
+                sx={{
+                  color: "#707070",
+                  fontSize: "12px",
+                }}
+              >
+                Trang chủ
+              </Typography>
+            </Box>
+          </Link>
+          <Typography
             sx={{
+              color: "#707070",
               fontSize: "12px",
             }}
           >
-            <Link to="/">
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "5px",
-                }}
-              >
-                <HomeIcon
-                  sx={{
-                    color: "#d70018",
-                    width: "15px",
-                    height: "15px",
-                  }}
-                />
+            Tìm kiếm sản phẩm
+          </Typography>
 
-                <Typography
-                  sx={{
-                    color: "#707070",
-                    fontSize: "12px",
-                  }}
-                >
-                  Trang chủ
-                </Typography>
-              </Box>
-            </Link>
+          <Typography
+            sx={{
+              color: "#707070",
+              fontSize: "12px",
+            }}
+          >
+            {searchQuery}
+          </Typography>
+        </Breadcrumbs>
+        <Typography
+          sx={{
+            fontSize: "14px",
+            color: "#707070",
+            textAlign: "center",
+          }}
+        >
+          Kết quả tìm kiếm cho từ khóa <b>"{searchQuery}"</b>
+        </Typography>
 
-            <Typography
-              sx={{
-                color: "#707070",
-                fontSize: "12px",
-              }}
-            >
-              {tenDanhMuc}
-            </Typography>
-          </Breadcrumbs>
-        )}
-        <LocSanPham filterValue={filterValue} setFilterValue={setFilterValue} />
+        <LocSanPham
+          setLoaiDanhMuc={setLoaiDanhMuc}
+          loaiDanhMuc={loaiDanhMuc}
+          filterValue={filterValue}
+          setFilterValue={setFilterValue}
+          listDanhMuc={listDanhMuc}
+          isSearch={true}
+        />
 
         <Box
           sx={{
@@ -288,4 +313,4 @@ const TatCaSanPham = () => {
     </>
   );
 };
-export default TatCaSanPham;
+export default Search;

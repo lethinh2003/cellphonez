@@ -82,8 +82,8 @@ const GioHang = () => {
         >
           <ShoppingBagOutlinedIcon
             sx={{
-              width: "35px",
-              height: "35px",
+              width: "25px",
+              height: "25px",
             }}
           />
           <Typography
@@ -92,6 +92,8 @@ const GioHang = () => {
               top: "55%",
               left: "50%",
               transform: "translate(-50%, -50%)",
+              fontWeight: "bold",
+              fontSize: "10px",
             }}
           >
             {listCart.length}

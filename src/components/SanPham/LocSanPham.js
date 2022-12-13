@@ -3,7 +3,14 @@ import PercentIcon from "@mui/icons-material/Percent";
 import SouthWestIcon from "@mui/icons-material/SouthWest";
 import { Box, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
-const LocSanPham = ({ filterValue, setFilterValue }) => {
+const LocSanPham = ({
+  filterValue,
+  setFilterValue,
+  listDanhMuc,
+  isSearch = false,
+  setLoaiDanhMuc,
+  loaiDanhMuc,
+}) => {
   const ButtonLoc = styled(Box)({
     display: "flex",
     justifyContent: "center",
@@ -50,6 +57,54 @@ const LocSanPham = ({ filterValue, setFilterValue }) => {
           gap: "10px",
         }}
       >
+        {isSearch && (
+          <>
+            <Typography
+              sx={{
+                fontWeight: "bold",
+                fontSize: "18px",
+              }}
+            >
+              Chọn theo danh mục
+            </Typography>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "10px",
+                flexWrap: "wrap",
+              }}
+            >
+              <ButtonLoc
+                onClick={() => setLoaiDanhMuc("all")}
+                className={loaiDanhMuc === "all" ? "active" : null}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "12px",
+                  }}
+                >
+                  Tất cả
+                </Typography>
+              </ButtonLoc>
+              {listDanhMuc.map((item, i) => (
+                <ButtonLoc
+                  onClick={() => setLoaiDanhMuc(item._id)}
+                  className={loaiDanhMuc === item._id ? "active" : null}
+                  key={i}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "12px",
+                    }}
+                  >
+                    {item.tenDanhMuc}
+                  </Typography>
+                </ButtonLoc>
+              ))}
+            </Box>
+          </>
+        )}
+
         <Typography
           sx={{
             fontWeight: "bold",

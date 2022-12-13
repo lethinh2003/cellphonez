@@ -1,10 +1,14 @@
+import HomeIcon from "@mui/icons-material/Home";
 import {
   Backdrop,
   Box,
+  Breadcrumbs,
   CircularProgress,
   TextField,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
+
 import axios from "axios";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -57,119 +61,170 @@ const TraCuuDonHang = () => {
           />
         </Backdrop>
       )}
+
       <Box
         sx={{
-          margin: "0 auto",
-          maxWidth: "800px",
-          width: "100%",
-          borderRadius: "10px",
-          marginTop: "100px",
-          fontSize: "14px",
-          gap: "10px",
+          marginTop: "74px",
           display: "flex",
-          background: "#f5f5f5",
-          overflow: "hidden",
-          alignItems: "center",
-          flexDirection: { xs: "column", md: "row" },
+          flexDirection: "column",
+          gap: "15px",
         }}
       >
-        <Box
+        <Breadcrumbs
+          separator="›"
           sx={{
-            width: "50%",
-            position: "relative",
-            height: { xs: "200px", md: "400px" },
+            fontSize: "12px",
           }}
         >
-          <Box
-            sx={{
-              height: { xs: "400px", md: "800px" },
-              width: "800px",
-              position: "absolute",
-              zIndex: 0,
-              top: "-300px",
-              left: "-571px",
-              transform: "rotate(55deg)",
-              background:
-                "linear-gradient(to bottom right,#fd2424 37%,#f5f5f5 70%)",
-              opacity: "0.6",
-            }}
-          ></Box>
-          <Box
-            sx={{
-              position: "absolute",
-              top: 33,
-              left: 43,
-              width: "200px",
-              height: "200px",
-            }}
-          >
-            <img
-              src="https://cdn2.cellphones.com.vn/x/media/wysiwyg/Shipper.png"
-              style={{
-                width: "100%",
-                height: "100%",
+          <Link to="/">
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: "5px",
               }}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            gap: "20px",
-            padding: "20px",
-          }}
-        >
+            >
+              <HomeIcon
+                sx={{
+                  color: "#d70018",
+                  width: "15px",
+                  height: "15px",
+                }}
+              />
+
+              <Typography
+                sx={{
+                  color: "#707070",
+                  fontSize: "12px",
+                }}
+              >
+                Trang chủ
+              </Typography>
+            </Box>
+          </Link>
           <Typography
             sx={{
-              fontSize: "22px",
-              color: "#4a4a4a",
-              fontWeight: "bold",
-              textAlign: "right",
+              color: "#707070",
+              fontSize: "12px",
             }}
           >
-            Kiểm tra thông tin đơn hàng & tình trạng vận chuyển
+            Tra cứu đơn hàng
           </Typography>
-          <TextField
-            label="Số điện thoại"
-            variant="outlined"
-            value={soDienThoai}
-            onChange={(e) => setSoDienThoai(e.target.value)}
-            size="small"
-            sx={{
-              backgroundColor: "#fff",
-            }}
-          />
-          <TextField
-            label="Mã đơn hàng"
-            variant="outlined"
-            size="small"
-            value={maDonHang}
-            onChange={(e) => setMaDonHang(e.target.value)}
-            sx={{
-              backgroundColor: "#fff",
-            }}
-          />
+        </Breadcrumbs>
+        <Box
+          sx={{
+            margin: "0 auto",
+            maxWidth: "800px",
+            width: "100%",
+            borderRadius: "10px",
+
+            fontSize: "14px",
+            gap: "10px",
+            display: "flex",
+            background: "#f5f5f5",
+            overflow: "hidden",
+            alignItems: "center",
+            flexDirection: { xs: "column", md: "row" },
+          }}
+        >
           <Box
-            onClick={() => handleClickTraCuu()}
             sx={{
-              backgroundColor: "#fd2424",
-              borderRadius: "10px",
-              padding: "10px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "#ffffff",
-              fontSize: "16px",
-              fontWeight: "bold",
-              cursor: "pointer",
-              maxWidth: "180px",
-              width: "100%",
-              alignSelf: "center",
+              width: "50%",
+              position: "relative",
+              height: { xs: "200px", md: "400px" },
             }}
           >
-            Kiểm tra
+            <Box
+              sx={{
+                height: { xs: "400px", md: "800px" },
+                width: "800px",
+                position: "absolute",
+                zIndex: 0,
+                top: "-300px",
+                left: "-571px",
+                transform: "rotate(55deg)",
+                background:
+                  "linear-gradient(to bottom right,#fd2424 37%,#f5f5f5 70%)",
+                opacity: "0.6",
+              }}
+            ></Box>
+            <Box
+              sx={{
+                position: "absolute",
+                top: 33,
+                left: 43,
+                width: "200px",
+                height: "200px",
+              }}
+            >
+              <img
+                src="https://cdn2.cellphones.com.vn/x/media/wysiwyg/Shipper.png"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+              padding: "20px",
+            }}
+          >
+            <Typography
+              sx={{
+                fontSize: "22px",
+                color: "#4a4a4a",
+                fontWeight: "bold",
+                textAlign: "right",
+              }}
+            >
+              Kiểm tra thông tin đơn hàng & tình trạng vận chuyển
+            </Typography>
+            <TextField
+              label="Số điện thoại"
+              variant="outlined"
+              value={soDienThoai}
+              onChange={(e) => setSoDienThoai(e.target.value)}
+              size="small"
+              sx={{
+                backgroundColor: "#fff",
+              }}
+            />
+            <TextField
+              label="Mã đơn hàng"
+              variant="outlined"
+              size="small"
+              value={maDonHang}
+              onChange={(e) => setMaDonHang(e.target.value)}
+              sx={{
+                backgroundColor: "#fff",
+              }}
+            />
+            <Box
+              onClick={() => handleClickTraCuu()}
+              sx={{
+                backgroundColor: "#fd2424",
+                borderRadius: "10px",
+                padding: "10px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                color: "#ffffff",
+                fontSize: "16px",
+                fontWeight: "bold",
+                cursor: "pointer",
+                maxWidth: "180px",
+                width: "100%",
+                alignSelf: "center",
+              }}
+            >
+              Kiểm tra
+            </Box>
           </Box>
         </Box>
       </Box>
