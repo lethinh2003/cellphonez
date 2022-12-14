@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { useEffect } from "react";
@@ -73,7 +73,17 @@ const DanhMuc = () => {
           display: { xs: "none", md: "flex" },
         }}
       >
-        {dataQuery &&
+        {isLoading &&
+          Array.from({ length: 10 }).map((item, i) => (
+            <DanhMucItem key={i}>
+              <Skeleton
+                variant="rectangular"
+                sx={{ width: "100%", height: "20px" }}
+              />
+            </DanhMucItem>
+          ))}
+        {!isLoading &&
+          dataQuery &&
           dataQuery.data.length > 0 &&
           dataQuery.data.map((item, i) => {
             return (

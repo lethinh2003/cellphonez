@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -21,6 +21,7 @@ const BannerPhu = () => {
     width: "100%",
     borderRadius: "10px",
     overflow: "hidden",
+    marginBottom: "10px",
 
     "& img": {
       width: "100%",
@@ -60,12 +61,16 @@ const BannerPhu = () => {
             width: "100%",
             height: "100%",
             overflowY: "auto",
-            display: "flex",
-            flexDirection: "column",
-            gap: "10px",
           }}
         >
-          {dataQuery &&
+          {isLoading &&
+            Array.from({ length: 3 }).map((item, i) => (
+              <BannerItem key={i}>
+                <Skeleton variant="rounded" width={"100%"} height={"120px"} />
+              </BannerItem>
+            ))}
+          {!isLoading &&
+            dataQuery &&
             dataQuery.data &&
             dataQuery.data.linkAnhBannerPhu.length > 0 &&
             dataQuery.data.linkAnhBannerPhu.map((item, i) => {

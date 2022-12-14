@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
 import { useQuery } from "react-query";
@@ -9,7 +9,6 @@ const BannerChinh = () => {
   const Container = styled(Box)({
     boxShadow: "0px 0px 12px 2px #ccc",
     backgroundColor: "#ffffff",
-    width: "100%",
 
     flex: 1,
     width: "100%",
@@ -52,6 +51,7 @@ const BannerChinh = () => {
       <Container
         sx={{
           maxWidth: { xs: "100%", md: "calc(100% - 165px - 20px)", lg: "55%" },
+          height: isLoading ? { xs: "250px", md: "100%" } : "100%",
         }}
       >
         <Box
@@ -74,7 +74,13 @@ const BannerChinh = () => {
             }}
             modules={[Grid, Navigation, Pagination, Autoplay]}
           >
-            {dataQuery &&
+            {isLoading && (
+              <BannerItem>
+                <Skeleton variant="rounded" width={"100%"} height={"100%"} />
+              </BannerItem>
+            )}
+            {!isLoading &&
+              dataQuery &&
               dataQuery.data &&
               dataQuery.data.linkAnhBannerChinh.length > 0 &&
               dataQuery.data.linkAnhBannerChinh.map((item, i) => {
